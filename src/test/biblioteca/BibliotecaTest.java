@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,7 +45,7 @@ class BibliotecaTest {
 
 
     /**
-     * Test para verificar que el método encuentraLibroPorTitulo devuelve null
+     * Test para verificar que el método encuentraLibroPorTitulo devuelve {@code null}
      * si no encuentra un libro con el título dado.
      */
     @Test
@@ -53,5 +54,42 @@ class BibliotecaTest {
         Libro libroEncontrado = biblioteca.encuentraLibroPorTitulo("Conde Cero");
         // Entonces
         assertNull(libroEncontrado);
+    }
+
+    /**
+     * Test para verificar que el método encuentra un libro por título
+     */
+    @Test
+    public void testEncuentraLibroPorTitulo() {
+        // Dado
+        boolean libroAnadido = biblioteca.agregarLibro(libro);
+        // Cuando
+        Libro libroEncontrado = biblioteca.encuentraLibroPorTitulo("Neuromante");
+        // Entonces
+        assertEquals(libro, libroEncontrado);
+    }
+
+    @Test
+    public void testEncuentraLibrosPorAutor() {
+        // Dado
+        List<Libro> listaLibrosAnadidos = new ArrayList<Libro>();
+        listaLibrosAnadidos.add(libro);
+        boolean libroAnadido = biblioteca.agregarLibro(libro);
+        // Cuando
+        List<Libro> listaLibrosEncontrados = biblioteca.encuentraLibrosPorAutor("William Gibson");
+        // Entonces
+        assertEquals(listaLibrosAnadidos,listaLibrosEncontrados);
+    }
+
+    @Test
+    public void testEncuentraLibrosPorAutor_NoExistente() {
+        // Dado
+        List<Libro> listaLibrosAnadidos = new ArrayList<Libro>();
+        listaLibrosAnadidos.add(libro);
+        boolean libroAnadido = biblioteca.agregarLibro(libro);
+        // Cuando
+        List<Libro> listaLibrosEncontrados = biblioteca.encuentraLibrosPorAutor("Isaac Asimov");
+        // Entonces
+        assertNull(listaLibrosEncontrados);
     }
 }
